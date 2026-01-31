@@ -386,7 +386,17 @@
 
             if (window.FedaPay) {
                 try {
-                    window.FedaPay.init({
+                    // Création d'un élément déclencheur caché pour éviter les conflits d'événements
+                    let triggerBtn = document.getElementById('fedapay-trigger');
+                    if (!triggerBtn) {
+                        triggerBtn = document.createElement('button');
+                        triggerBtn.id = 'fedapay-trigger';
+                        triggerBtn.style.display = 'none';
+                        document.body.appendChild(triggerBtn);
+                    }
+
+                    // Initialisation sur l'élément caché
+                    window.FedaPay.init('#fedapay-trigger', {
                         public_key: FEDAPAY_PUBLIC_KEY,
                         transaction: {
                             amount: selectedPass.price,
@@ -400,9 +410,7 @@
                         },
                         onComplete: async (resp) => {
                             if (resp.transaction && resp.transaction.status === 'approved') {
-                                // Save Data Async
                                 saveData(customer, selectedPass, resp.transaction.id);
-                                // Move to success
                                 showSuccessView(false);
                                 fetchWifiCode(resp.transaction.id);
                             } else if (resp.transaction && resp.transaction.status !== 'canceled') {
@@ -410,16 +418,12 @@
                             }
                         }
                     });
-                    // Note: FedaPay checkout js usually attaches to a button or opens immediately depending on config.
-                    // Since we are inside the onclick, we might need to trigger open() if init doesn't auto-open
-                    // However, the standard implementation usually involves `FedaPay.init(selector, options)`.
-                    // Let's use the object open method if available or re-init on a hidden button.
-                    
-                    // Fallback specific for dynamic JS triggering if needed:
-                     /* 
-                       Since simple html implementation might differ from react wrapper, 
-                       we will rely on the standard `FedaPay.init` behavior which opens the dialog.
-                     */
+
+                    // Simulation du clic pour lancer la popup
+                    setTimeout(() => {
+                        triggerBtn.click();
+                    }, 100);
+
                 } catch (e) {
                     console.error("FedaPay Error", e);
                     alert("Erreur d'initialisation du paiement.");
