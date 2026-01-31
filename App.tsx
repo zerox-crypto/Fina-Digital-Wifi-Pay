@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from './components/Header';
 import PlanCard from './components/PlanCard';
@@ -96,7 +95,7 @@ const App: React.FC = () => {
             </div>
             <div>
               <h4 className="font-bold text-gray-900 mb-1">Ultra Rapide</h4>
-              <p className="text-sm text-gray-500">Connexion fibre optique jusqu'à 100 Mbps pour tous vos appareils.</p>
+              <p className="text-sm text-gray-500">Connexion satellite jusqu'à 100 Mbps pour tous vos appareils.</p>
             </div>
           </div>
           <div className="flex gap-4">
