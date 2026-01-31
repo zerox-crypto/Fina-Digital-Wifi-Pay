@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { WifiPass } from '../types';
 
@@ -243,7 +242,7 @@ const SuccessView: React.FC<SuccessViewProps> = ({ pass, transaction, onDone, is
                     type="text"
                     value={manualTransactionId}
                     onChange={(e) => setManualTransactionId(e.target.value)}
-                    placeholder="Entrez votre ID de transaction (ex: 123456)"
+                    placeholder="Ex: 109178190"
                     className="w-full px-4 py-3 bg-white border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium text-gray-900"
                     disabled={isManualLoading}
                   />
